@@ -1,0 +1,20 @@
+"always-semicolon": true
+    "block-indent": "    "
+    "color-case": "lower"
+    "color-shorthand": false
+    "element-case": "lower"
+    "eof-newline": false
+    "leading-zero": true
+    quotes: "single"
+    "remove-empty-rulesets": true
+    "sort-order-fallback": "abc"
+    "space-after-colon": " "
+    "space-after-combinator": " "
+    "space-after-opening-brace": " "
+    "space-after-selector-delimiter": " "
+    "space-before-closing-brace": " "
+    "space-before-colon": " "
+    "space-before-combinator": " "
+    "space-before-opening-brace": " "
+    "space-before-selector-delimiter": ""
+    "space-between-declarations": " "
