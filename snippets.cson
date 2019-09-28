@@ -1,0 +1,107 @@
+# Your snippets
+#
+# Atom snippets allow you to enter a simple prefix in the editor and hit tab to
+# expand the prefix into a larger code block with templated values.
+#
+# You can create a new snippet in this file by typing "snip" and then hitting
+# tab.
+#
+# An example CoffeeScript snippet to expand log to console.log:
+#
+# '.source.coffee':
+#   'Console log':
+#     'prefix': 'log'
+#     'body': 'console.log $1'
+#
+# Each scope (e.g. '.source.coffee' above) can only be declared once.
+#
+# This file uses CoffeeScript Object Notation (CSON).
+# If you are unfamiliar with CSON, you can read more about it in the
+# Atom Flight Manual:
+# http://flight-manual.atom.io/using-atom/sections/basic-customization/#_cson
+
+'.text.html.basic':
+    'Box':
+      'prefix': 'box'
+      'body': """
+      <div class="box">
+        <div class="box__content">
+          <h3> Lorem </h3>
+        </div>
+      </div>
+      """
+'.source.css':
+    'Box':
+      'prefix': 'box'
+      'body': """
+      .box{width: 100%; height: 300px; background: #333; display: flex; align-items: center; justify-content: center;}
+      .box__content{color:#fff; text-align:center}
+      """
+    'Border':
+      'prefix': 'br'
+      'body': 'border: 1px solid red;'
+
+
+'.source.js':
+  'console.log':
+    'prefix': 'log'
+    'body': 'console.log(${1:"crash"});$2'
+
+
+'.text.html.php':
+    'Php':
+      'prefix': 'p'
+      'body': """
+      <?php
+        $1
+      ?>
+      """
+
+    'Loop':
+      'prefix': 'loop'
+      'body': """
+      <?php /* Custom Loop */
+
+      $custom_loop = new WP_Query( array(
+        'post_type'			=> 'page',
+        'posts_per_page'=> 3,
+        'orderby' => 'menu_order',
+        'order' => 'ASC',
+        ${1:// 'tax_query' => array(
+        // 		array( 'taxonomy' => 'people',
+        // 			'field'    => 'slug',
+        // 			'terms'    => 'bob',
+        // 		)
+        //  )}
+      )); ?>
+
+      <?php if ($custom_loop->have_posts()) : while($custom_loop->have_posts()) : $custom_loop->the_post(); ?>
+
+        <?php the_post_thumbnail('thumbnail', array('class' => '','alt' => get_the_title())); ?>
+        <h3><?php the_title(); ?></h3>
+        <?php the_content(); ?>
+
+        <?php wp_reset_postdata(); ?>
+      <?php endwhile; endif; ?>
+      """
+
+    'Img':
+      'prefix': 'imgbg'
+      'body': """
+      <?php /* Image Url */
+      	$image_attributes =  wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'large' );
+      ?>
+      <div class="$1" style="background: url(<?php echo $image_attributes[0]; ?>) center center; -webkit-background-size: cover; -moz-background-size: cover; background-size: cover; -o-background-size: cover;">
+        $2
+      </div>
+      """
+
+    'Box':
+      'prefix': 'box'
+      'body': """
+      <div class="box">
+        <div class="box__content">
+          <h3> Lorem </h3>
+        </div>
+      </div>
+      """
