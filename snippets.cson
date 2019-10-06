@@ -30,6 +30,22 @@
         </div>
       </div>
       """
+
+    'Tab':
+      'prefix': 'tab'
+      'body': """
+      <div class="tabs">
+        <a href="" class="tab__item tab__item--current">My Tab 1</a>
+        <a href="" class="tab__item">My Tab 2</a>
+        <a href="" class="tab__item">My Tab 3 </a>
+      </div>
+      <section class="tab__content">
+        <div class="tab__info tab__info--active"> Lorem ipsum for tab 1 </div>
+        <div class="tab__info"> Lorem ipsum for tab 2 </div>
+        <div class="tab__info"> Lorem ipsum for tab 3 </div>
+      </section>
+      """
+
 '.source.css':
     'Box':
       'prefix': 'box'
@@ -41,11 +57,58 @@
       'prefix': 'br'
       'body': 'border: 1px solid red;'
 
+    'Tab':
+      'prefix': 'tab'
+      'body': """
+        .tab__item{display:inline-block; padding:10px; background:#ccc; }
+        .tab__info{border:1px solid #ddd; height:100px;}
+        .tab__info{display:none}
+        .tab__info--active{display:block}
+        .tab__item--current{background-color:yellow}
+      """
+
 
 '.source.js':
   'console.log':
     'prefix': 'log'
     'body': 'console.log(${1:"crash"});$2'
+
+  'Toggle':
+    'prefix': 'toggle'
+    'body': """
+    /* Open Panel */
+    $( ".trigger" ).on('click', function() {
+      $(".target").toggleClass("open");
+    });
+    """
+  'Tab':
+    'prefix': 'tab'
+    'body': """
+    var btn = $('.tab__item'),
+        info = $('.tab__info');
+    btn.click(function(e) {
+        e.preventDefault();
+        var index = $(this).index();
+        info.hide();
+        info.eq(index).show();
+        $('.tab__item').removeClass('tab__item--current');
+        $(this).addClass('tab__item--current');
+    });
+    """
+
+  'Scroll Down':
+    'prefix': 'scroll'
+    'body': """
+    /* Scroll Down */
+    $('.scroll-down').click(function(event){
+      event.preventDefault();
+      //scroll down the panel
+      $("html, body").animate({ scrollTop: $('#anchor').offset().top }, 700);
+    });
+    """
+
+
+
 
 
 '.text.html.php':
@@ -104,4 +167,19 @@
           <h3> Lorem </h3>
         </div>
       </div>
+      """
+
+    'Tab':
+      'prefix': 'tab'
+      'body': """
+      <div class="tabs">
+        <a href="" class="tab__item tab__item--current">My Tab 1</a>
+        <a href="" class="tab__item">My Tab 2</a>
+        <a href="" class="tab__item">My Tab 3 </a>
+      </div>
+      <section class="tab__content">
+        <div class="tab__info tab__info--active"> Lorem ipsum for tab 1 </div>
+        <div class="tab__info"> Lorem ipsum for tab 2 </div>
+        <div class="tab__info"> Lorem ipsum for tab 3 </div>
+      </section>
       """
