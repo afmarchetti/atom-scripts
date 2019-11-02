@@ -30,7 +30,6 @@
         </div>
       </div>
       """
-
     'Tab':
       'prefix': 'tab'
       'body': """
@@ -45,6 +44,47 @@
         <div class="tab__info"> Lorem ipsum for tab 3 </div>
       </section>
       """
+    'Img':
+      'prefix': 'imgbg'
+      'body': """
+      <div class="img-bg" style="background: url('$1') center center; -webkit-background-size: cover; -moz-background-size: cover; background-size: cover; -o-background-size: cover;">
+
+      </div>
+      """
+
+    'Cover':
+      'prefix': 'cover'
+      'body': """
+      <section class="cover filter" style="background: url('${1:http://afmarchetti.github.io/alux/image.jpg}') center center;background-size: cover;">
+        <div class="cover__text grid grid--center">
+          <div class="col-80">
+            <h1>Cover Title</h1>
+            <h2>Subtitle of the cover</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur maiores, deleniti voluptates.</p>
+            <a class="button animate" href="">Call to action</a>
+          </div>
+        </div>
+      </section>
+      """
+
+    'Tile':
+      'prefix': 'tile'
+      'body': """
+      <div class="tile filter" style="background: url(http://afmarchetti.github.io/alux/image.jpg) center center;background-size: cover;">
+        <div class="tile__text">
+          <h3 class="mb-0">Card title</h3>
+          <h4 class="light small">Lorem ipsum</h4>
+        </div>
+      </div>
+      """
+    'Comment':
+      'prefix': 'com'
+      'body': """
+      <!-- $1 -->
+      """
+
+
+
 
 '.source.css':
     'Box':
@@ -56,7 +96,6 @@
     'Border':
       'prefix': 'br'
       'body': 'border: 1px solid red;'
-
     'Tab':
       'prefix': 'tab'
       'body': """
@@ -66,6 +105,14 @@
         .tab__info--active{display:block}
         .tab__item--current{background-color:yellow}
       """
+    'Comment':
+      'prefix': 'com'
+      'body': """
+      /* -------------------------------------------------------------------------------- */
+      /* ! $1 */
+      /* -------------------------------------------------------------------------------- */
+      """
+
 
 
 '.source.js':
@@ -81,6 +128,7 @@
       $(".target").toggleClass("open");
     });
     """
+
   'Tab':
     'prefix': 'tab'
     'body': """
@@ -106,9 +154,13 @@
       $("html, body").animate({ scrollTop: $('#anchor').offset().top }, 700);
     });
     """
-
-
-
+  'Comment':
+    'prefix': 'com'
+    'body': """
+    /*	-----------------------------------------------------------------------------------------------
+    	$1
+    --------------------------------------------------------------------------------------------------- */
+    """
 
 
 '.text.html.php':
@@ -120,8 +172,8 @@
       ?>
       """
 
-    'Loop':
-      'prefix': 'loop'
+    'Custom Loop':
+      'prefix': 'wp-custom-loop'
       'body': """
       <?php /* Custom Loop */
 
@@ -149,7 +201,7 @@
       """
 
     'Img':
-      'prefix': 'imgbg'
+      'prefix': 'wp-imgbg'
       'body': """
       <?php /* Image Url */
       	$image_attributes =  wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'large' );
@@ -158,6 +210,232 @@
         $2
       </div>
       """
+
+    'Uri':
+      'prefix': 'wp-uri'
+      'body': """<?php echo get_stylesheet_directory_uri(); ?>"""
+
+
+    'Header':
+      'prefix': 'wp-header'
+      'body': """<?php get_header(); ?>"""
+
+
+    'Is Search':
+      'prefix': 'wp-is-search'
+      'body': """
+
+        <?php if ( is_search() ) { ?>
+          <?php esc_html_e('Result for:', 'slug-theme'); ?> <strong><i><?php echo $s ?></i></strong>
+        <?php } else  if ( is_category() || is_tag() ) { ?>
+          <?php echo single_cat_title() ?>
+        <?php } else if ( is_home() ){ ?>
+          <?php single_post_title(); ?>
+        <?php } else if ( is_date() ){ ?>
+          <?php single_month_title(' '); ?>
+        <?php } else if ( is_archive() ){ ?>
+          <?php post_type_archive_title(); ?>
+        <?php } ?>
+
+      """
+
+    'Loop':
+      'prefix': 'wp-loop'
+      'body': """
+        <?php if (have_posts()) :?><?php while(have_posts()) : the_post(); ?>
+
+          <!-- loop content -->
+
+        <?php endwhile; ?>
+          <p><?php previous_posts_link( 'Older posts' ); ?> - <?php next_posts_link( 'Newer posts' ); ?></p>
+        <?php else : ?>
+          <p><?php esc_html_e('Sorry, no posts matched your criteria.', 'slug-theme'); ?></p>
+        <?php endif; ?>
+      """
+
+    'Post Class':
+      'prefix': 'wp-post-class'
+      'body': """<?php post_class(); ?>"""
+
+    'Permalink':
+      'prefix': 'wp-permalink'
+      'body': """<?php the_permalink(); ?>"""
+
+    'Title':
+      'prefix': 'wp-title'
+      'body': """<?php the_title(); ?>"""
+
+    'Time':
+      'prefix': 'wp-time'
+      'body': """<?php the_time('j M , Y') ?>"""
+
+    'Category':
+      'prefix': 'wp-category'
+      'body': """<?php the_category(', '); ?>"""
+
+    'Excerpt':
+      'prefix': 'wp-excerpt'
+      'body': """<?php the_excerpt();?>"""
+
+    'Sidebar':
+      'prefix': 'wp-sidebar'
+      'body': """<?php get_sidebar(); ?>"""
+
+    'Footer':
+      'prefix': 'wp-footer'
+      'body': """<?php get_footer(); ?>"""
+
+    'Language':
+      'prefix': 'wp-lang'
+      'body': """<?php language_attributes();?>"""
+
+    'Description':
+      'prefix': 'wp-desc'
+      'body': """<?php bloginfo( 'description' ); ?>"""
+
+    'Head':
+      'prefix': 'wp-head'
+      'body': """<?php wp_head(); ?>"""
+
+    'Foot':
+      'prefix': 'wp-foot'
+      'body': """<?php wp_footer(); ?>"""
+
+    'Body':
+      'prefix': 'wp-body'
+      'body': """<?php body_class(); ?>"""
+
+    'Home':
+      'prefix': 'wp-home'
+      'body': """<?php echo home_url(); ?>"""
+
+    'Blog Title':
+      'prefix': 'wp-blog-tit'
+      'body': """<?php bloginfo('title'); ?>"""
+
+    'Menu':
+      'prefix': 'wp-menu'
+      'body': """
+        <?php
+        wp_nav_menu(array(
+          'theme_location' => 'header',
+          //'walker' => new Clean_Walker_Nav(),
+          'container' => false,
+          'items_wrap' => '<ul>%3$s</ul>'
+        ));
+        ?>
+      """
+
+    'Name':
+      'prefix': 'wp-name'
+      'body': """<?php bloginfo('name'); ?>"""
+
+    'Is Page Template':
+      'prefix': 'wp-is-page-template'
+      'body': """
+
+        <?php if (is_page_template( '$1' )) { ?>
+
+          <!-- content to show -->
+
+        <?php } ?>
+
+      """
+
+    'Copyright':
+      'prefix': 'wp-copy'
+      'body': """<?php esc_html_e('&copy; Copyright ', 'slug-theme'); ?> <?php echo date("o");?>"""
+
+    'Theme Setup':
+      'prefix': 'wp-theme-setup'
+      'body': """
+      <?php
+      /*  Theme setup
+      /* ------------------------------------ */
+      if ( ! function_exists( 'slug-theme_setup' ) ) {
+
+      	function nakedpress_setup() {
+
+          // Enable title in header
+      		add_theme_support( "title-tag" );
+
+      		// Enable automatic feed links
+      		add_theme_support( 'automatic-feed-links' );
+
+      		// Enable featured image
+      		add_theme_support( 'post-thumbnails' );
+
+      		// Thumbnail sizes
+      		add_image_size( 'nakedpress_single', 800, 999, false );
+      		add_image_size( 'nakedpress_big', 1400, 928, true ); 	//(cropped)
+
+      		// Custom menu areas
+      		register_nav_menus( array(
+      			'header' => esc_html__( 'Header', 'slug-theme' )
+      		) );
+
+      		// Load theme languages
+      		load_theme_textdomain( 'slug-theme', get_template_directory().'/languages' );
+
+      	}
+
+      }
+      add_action( 'after_setup_theme', 'slug-theme_setup' );
+      ?>
+      """
+
+    'Sidebar Setup':
+      'prefix': 'wp-sidebar-setup'
+      'body': """
+        <?php
+        /*  Register sidebars
+        /* ------------------------------------ */
+        if ( ! function_exists( 'slug-theme_sidebars' ) ) {
+
+        	function nakedpress_sidebars()	{
+        		register_sidebar(array( 'name' => esc_html__( 'Primary', 'slug-theme' ),'id' => 'primary','description' => esc_html__( 'Normal full width sidebar.', 'slug-theme' ), 'before_widget' => '<div id="%1$s" class="widget %2$s">','after_widget' => '</div>','before_title' => '<h3>','after_title' => '</h3>'));
+        	}
+
+        }
+        add_action( 'widgets_init', 'slug-theme_sidebars' );
+        ?>
+      """
+
+    'Script Setup':
+      'prefix': 'wp-script-setup'
+      'body': """
+        <?php
+        /*  Enqueue javascript
+        /* ------------------------------------ */
+        if ( ! function_exists( 'slug-theme_scripts' ) ) {
+        	function nakedpress_scripts() {
+
+        		wp_enqueue_script( 'slug-theme-script', get_template_directory_uri() . '/js/script.js', array( 'jquery' ),'', true );
+        		if ( is_singular() && get_option( 'thread_comments' ) )	{ wp_enqueue_script( 'comment-reply' ); }
+
+        	}
+        }
+        add_action( 'wp_enqueue_scripts', 'slug-theme_scripts' );
+        ?>
+      """
+
+    'Style Setup':
+      'prefix': 'wp-style-setup'
+      'body': """
+        <?php
+        /*  Enqueue css
+        /* ------------------------------------ */
+        if ( ! function_exists( 'slug-theme_styles' ) ) {
+        	function nakedpress_styles() {
+
+        		wp_enqueue_style( 'slug-theme-style', get_template_directory_uri().'/style.css');
+
+        	}
+        }
+        add_action( 'wp_enqueue_scripts', 'slug-theme_styles' );
+        ?>
+      """
+
 
     'Box':
       'prefix': 'box'
@@ -182,4 +460,41 @@
         <div class="tab__info"> Lorem ipsum for tab 2 </div>
         <div class="tab__info"> Lorem ipsum for tab 3 </div>
       </section>
+      """
+
+    'Cover':
+      'prefix': 'cover'
+      'body': """
+      <?php /* Image Url */
+      	$image_attributes =  wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'large' );
+      ?>
+      <section class="cover filter" style="background: url(<?php echo $image_attributes[0]; ?>) center center;background-size: cover;">
+        <div class="cover__text grid grid--center">
+          <div class="col-80">
+            <h1><?php the_title(); ?></h1>
+            <h2><?php the_excerpt(); ?></h2>
+            <a class="button animate" href="<?php the_permalink(); ?>">Discover More</a>
+          </div>
+        </div>
+      </section>
+      """
+
+    'Tile':
+      'prefix': 'tile'
+      'body': """
+      <?php /* Image Url */
+      	$image_attributes =  wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'large' );
+      ?>
+      <div class="tile filter" style="background: url(<?php echo $image_attributes[0]; ?>) center center;background-size: cover;">
+        <div class="tile__text">
+          <h3 class="mb-0"><?php the_title(); ?></h3>
+          <h4 class="light small"><?php the_excerpt(); ?></h4>
+        </div>
+      </div>
+      """
+
+    'Comment':
+      'prefix': 'com'
+      'body': """
+      <!-- $1 -->
       """
