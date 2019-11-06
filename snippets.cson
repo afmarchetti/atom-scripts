@@ -439,6 +439,217 @@
         ?>
       """
 
+    'Thumbnail':
+      'prefix': 'wp-thumbnail'
+      'body': """	<?php the_post_thumbnail('thumbnail', array('class' => 'img-res','alt' => get_the_title())); ?>"""
+
+    'Content':
+      'prefix': 'wp-content'
+      'body': """<?php the_content(esc_html__('Read More...', 'slug-theme'));?>"""
+
+    'Page Link':
+      'prefix': 'wp-pagelink'
+      'body': """<?php wp_link_pages('pagelink=Page %'); ?>"""
+
+    'Tag':
+      'prefix': 'wp-tag'
+      'body': """<?php the_tags('', ', ', ''); ?>"""
+
+    'Comments':
+      'prefix': 'wp-comment'
+      'body': """<?php comments_template(); ?>"""
+
+    'Dinamic Sidebar':
+      'prefix': 'wp-dinamicsidebar'
+      'body': """
+        <?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('primary') ) : ?>
+        <?php endif; ?>
+      """
+
+    'Search':
+      'prefix': 'wp-search'
+      'body': """
+        <?php get_search_form(); ?>
+      """
+
+    'Search Form':
+      'prefix': 'wp-searchform'
+      'body': """
+         <form class="search-form" role="search" method="get" action="<?php echo home_url(); ?>">
+            <input  type="text" placeholder="<?php esc_html_e('Search', 'slug-theme'); ?>" name="s">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+      """
+
+    'Comments Template':
+      'prefix': 'wp-commentstemplate'
+      'body': """
+          <?php
+          // ##########  Do not delete these lines
+          if (isset($_SERVER['SCRIPT_FILENAME']) && 'comments.php' == basename($_SERVER['SCRIPT_FILENAME'])){
+              die (esc_html__('Please do not load this page directly. Thanks!', 'nakedpress' )); }
+          if ( post_password_required() ) { ?>
+              <p class="nocomments"><?php esc_html_e('This post is password protected. Enter the password to view comments.', 'nakedpress'); ?></p>
+          <?php
+              return; }
+          // ##########  End do not delete section
+
+          // Display Comments Section
+          if ( have_comments() ) : ?>
+              <h3 id="comments"><?php comments_number( esc_html__( 'No Responses', 'nakedpress' ), esc_html__( '1 Response', 'nakedpress' ), esc_html__( '% Responses', 'nakedpress') ); ?></h3>
+                  <div class="navigation">
+                      <div class="alignleft"><?php previous_comments_link() ?></div>
+                      <div class="alignright"><?php next_comments_link() ?></div>
+                  </div>
+              <ol class="commentlist">
+               <?php
+               wp_list_comments(array(
+                 'avatar_size' => 64,
+                ));
+                ?>
+              </ol>
+                  <div class="navigation">
+                      <div class="alignleft"><?php previous_comments_link() ?></div>
+                      <div class="alignright"><?php next_comments_link() ?></div>
+                  </div>
+              <?php
+              if ( ! comments_open() ) : // There are comments but comments are now closed ?>
+              	<p class="nocomments"><?php esc_html_e('Comments are closed.', 'nakedpress'); ?></p>
+              <?php
+              endif;
+
+          else : // I.E. There are no Comments
+              if ( comments_open() ) : // Comments are open, but there are none yet
+                  // echo"<p>Be the first to write a comment.</p>";
+              else : // comments are closed ?>
+                 <p class="nocomments"><?php esc_html_e('Comments are closed.', 'nakedpress'); ?></p>
+              <?php
+              endif;
+          endif;
+
+          // Display Form/Login info Section
+          // the comment_form() function handles this and can be used without any paramaters simply as "comment_form()"
+          comment_form(array(
+            // see codex http://codex.wordpress.org/Function_Reference/comment_form for default values
+            // tutorial here http://blogaliving.com/wordpress-adding-comment_form-theme/
+            'comment_field' => '<p><textarea name="comment" id="comment" cols="58" rows="10" tabindex="4" aria-required="true"></textarea></p>',
+            'label_submit' => ''.esc_html__('Submit Comment','nakedpress').'',
+            'comment_notes_after' => ''
+            ));
+
+          // RSS comments link
+          echo '<div class="comments_rss">';
+          post_comments_feed_link(''.esc_html__('Comments RSS Feed', 'nakedpress').'');
+          echo '</div>';
+
+          ?>
+      """
+
+    '404':
+      'prefix': 'wp-404'
+      'body': """
+          <h1><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'slug-theme' ); ?></h1>
+          <h2><?php esc_html_e( '404 Error', 'slug-theme' ); ?></h2>
+          <p><?php esc_html_e( 'The page you are trying to reach does not exist, or has been moved. Please use the menus or the search box to find what you are looking for.', 'slug-theme' ); ?></p>
+      """
+
+    'Walker':
+      'prefix': 'wp-walker'
+      'body': """
+        <?php
+        class Clean_Walker_Nav extends Walker_Nav_Menu {
+        	/**
+        	 * Filter used to remove built in WordPress-generated classes
+        	 * @param  mixed $var The array item to verify
+        	 * @return boolean      Whether or not the item matches the filter
+        	 */
+        	function filter_builtin_classes( $var ) {
+        	    return ( FALSE === strpos( $var, 'item' ) ) ? $var : '';
+        	}
+
+        	function start_lvl( &$output, $depth = 0, $args = array() ) {
+        		$indent = str_repeat("\t", $depth);
+        		$output .= "\n$indent<ul class=\"dropdown-menu\">\n";
+        	}
+
+        	function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
+        		$indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
+
+        		$class_names = $value = '';
+
+        		$unfiltered_classes = empty( $item->classes ) ? array() : (array) $item->classes;
+        		$classes = array_filter( $unfiltered_classes, array( $this, 'filter_builtin_classes' ) );
+
+            /* add custom classes if is active */
+        		if ( preg_grep("/^current-menu-item/", $unfiltered_classes) ) {
+        			$classes[] = 'active';
+        		}
+
+            /* add custom classes if is parent */
+            if ( preg_grep("/^menu-item-has-children/", $unfiltered_classes ) ) {
+              $classes[] = 'dropdown';
+            }
+
+        		$class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args ) );
+        		$class_names = $class_names ? ' class="' . esc_attr( $class_names ) . '"' : '';
+
+        		$id = apply_filters( 'nav_menu_item_id', 'menu-item-'. $item->ID, $item, $args );
+        		$id = $id ? ' id="' . esc_attr( $id ) . '"' : '';
+
+
+        		$output .= $indent . '<li' . $value . $class_names .'>';
+
+
+        		$atts = array();
+        		$atts['title']  = ! empty( $item->attr_title ) ? $item->attr_title : '';
+        		$atts['target'] = ! empty( $item->target )     ? $item->target     : '';
+        		$atts['rel']    = ! empty( $item->xfn )        ? $item->xfn        : '';
+        		$atts['href']   = ! empty( $item->url )        ? $item->url        : '';
+
+        		$atts = apply_filters( 'nav_menu_link_attributes', $atts, $item, $args );
+
+        		$attributes = '';
+        		foreach ( $atts as $attr => $value ) {
+        			if ( ! empty( $value ) ) {
+        				$value = ( 'href' === $attr ) ? esc_url( $value ) : esc_attr( $value );
+        				$attributes .= ' ' . $attr . '="' . $value . '"';
+        			}
+        		}
+
+        		$item_output = $args->before;
+
+        		/* dropdown */
+        		if ( preg_grep("/^menu-item-has-children/", $unfiltered_classes ) ) {
+        			$item_output .= '<a'. $attributes .' data-toggle="dropdown">';
+        		} else {
+        			$item_output .= '<a'. $attributes .'>';
+        		}
+
+        		$item_output .= $args->link_before . apply_filters( 'the_title', $item->title, $item->ID ) . $args->link_after;
+
+        		/* dropdown */
+        		if ( preg_grep("/^menu-item-has-children/", $unfiltered_classes ) ) {
+        			$item_output .= '<div class="arrow animate"></div></a>';
+        		} else {
+        			$item_output .= '</a>';
+        		}
+
+        		$item_output .= $args->after;
+
+        		$output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
+        	}
+
+        } // Walker_Nav_Menu
+        ?>
+    """
+
+    'Include in functions.php':
+      'prefix': 'wp-incfunctions'
+      'body': """ require_once('inc/nakedpress_navwalker.php'); """
+
+    'Include Parts':
+      'prefix': 'wp-inc'
+      'body': """ <?php get_template_part('inc/example-cover'); ?> """
 
     'Box':
       'prefix': 'box'
