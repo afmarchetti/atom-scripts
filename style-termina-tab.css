@@ -1,0 +1,9 @@
+//terminal colors add in atom --> styles.css
+.terminal-view-color-elements {
+  [data-color-key="foreground"] {
+    color: #3bfc34;
+  }
+  [data-color-key="background"] {
+    color: #1a1619;
+  }
+}
