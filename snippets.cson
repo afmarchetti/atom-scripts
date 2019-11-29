@@ -130,7 +130,7 @@
       """
 
     'Media Query':
-      'prefix': 'query'
+      'prefix': 'mediaquery'
       'body': """
       @media (min-width: 1023px) {
         $1
