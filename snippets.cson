@@ -780,3 +780,15 @@
 
       } ?>
       """
+
+    'Template':
+      'prefix': 'wp-template'
+      'body': """
+      <?php
+        /*
+        *
+        * Template Name: Template Name
+        *
+        */
+      } ?>
+      """
