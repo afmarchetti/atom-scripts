@@ -110,7 +110,7 @@
       .box__content{color:#fff; text-align:center}
       """
     'Border':
-      'prefix': 'br'
+      'prefix': 'bd'
       'body': 'border: 1px solid red;'
     'Tab':
       'prefix': 'tab'
@@ -121,13 +121,21 @@
         .tab__info--active{display:block}
         .tab__item--current{background-color:yellow}
       """
+     
     'Comment':
       'prefix': 'com'
+      'body': """
+      /* ! $1 */
+      """
+     
+    'Comment Big':
+      'prefix': 'combig'
       'body': """
       /* -------------------------------------------------------------------------------- */
       /* ! $1 */
       /* -------------------------------------------------------------------------------- */
       """
+
 
     'Media Query':
       'prefix': 'mediaquery'
